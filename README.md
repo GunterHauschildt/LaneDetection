@@ -1,6 +1,50 @@
 # LaneDeparture
 Prototype for a lane departure algorithm.
 
-## Results <a name="results"></a>
+CODE TO COME SOON
 
+## Results <a name="results"></a>
 https://github.com/user-attachments/assets/7037d4b3-788c-469c-b359-f67b5c74bb12
+
+## Discussion <a name="discussion">
+An image segmentation neural network is used to predict lane markers.  
+Classical image processing and machine learning tecniques are used to cleanup those lane markers, ultimately giving a left-right sorted list that describes these lane markers.
+These lane markers are then used to detect lane departures.
+
+### Data
+Kaggle's TuSimple dataset is used.  
+https://www.kaggle.com/datasets/manideep1108/tusimple  
+The data is annoted such that up to 4 lane markers are given: up to 2 to left and up to 2 to the right.  
+
+### Image Segmentation Neural Network <a name="image_segmentations">  
+The image segmentation neural network uses (pretrained) ResNet50 as the encoder and a pix2pix GAN as the decoder.  
+It is similar to https://www.tensorflow.org/tutorials/images/segmentation  
+100 epochs were used but the best validation accuraccy achieved after 20.  
+
+### Post Processing  
+The mask returned from the image segmentation NN must be converted to order lane marker descriptors.  
+To describe a lane marker's line, using y=mx+b will be used and thus the lane marker needs only m, b.  
+Generally, the NN gives noisy disconnected segments for each lane marker.  
+
+#### Morphology Open, Close, Smoothing  
+The mask as return from the image segmentation NN is first cleaned up by opening, closing, and then smoothing the resulting contours.  
+The result is 'curvy-but-close' 2D areas.
+
+#### Morphology Thinning    
+The 'curvy-but-close' 2D areas are converted to 'curvy-but-close' 1D contours.  
+If small, these 1D contours are discarded, otherwise they are assumed to be a straight line and their extremes used to define line segments.  
+
+#### K-Means Clustering & Sorting    
+The line segments are grouped according to K-Means clustering with silhouette score used to determine the number of lane markings found:  
+Thus we now know m, b for the lane markings found.  
+The lanes can be sorted by 'm'. Note that 'x' is vertical and 'y' is horizontal. This eliminates the possiblity of infinite slope -
+you can't drive perpendicular to the lane.
+
+#### Calibration  
+The period of N frames where all 4 lane markers are found is required.  
+
+#### Kalman Filtering  
+Each lane marker is kalman filtered.  
+
+#### Lane Deperature  
+Lane departure is now a simple matter of observing where the lane marker lies. In this example, only 'm' is required to detect departure.  
