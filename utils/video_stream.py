@@ -1,13 +1,5 @@
 from numpy.typing import NDArray
-from unet_model_mobilenetv2_pix2pix import unet_model
 import cv2 as cv
-import numpy as np
-import os
-import argparse
-import math
-from sklearn.cluster import KMeans
-from collections import defaultdict
-import matplotlib.pyplot as plt
 
 
 class VideoStream:

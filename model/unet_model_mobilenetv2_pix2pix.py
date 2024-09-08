@@ -1,5 +1,5 @@
 import tensorflow as tf
-from pix2pix import pix2pix
+from model.pix2pix import pix2pix
 
 base_model = tf.keras.applications.MobileNetV2(input_shape=[224, 224, 3], include_top=False)
 

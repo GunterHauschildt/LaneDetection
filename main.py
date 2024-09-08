@@ -1,17 +1,17 @@
 import cv2 as cv
 import numpy as np
 from numpy.typing import NDArray
-from unet_model_mobilenetv2_pix2pix import unet_model
+from model.unet_model_mobilenetv2_pix2pix import unet_model
 import os
 import argparse
 from collections import defaultdict
 
-from video_stream import VideoStream
-from calibrate import Calibrate
-from post_process import Postprocess
-from pre_process import Preprocess
-from display import Display
-from alarm_handler import AlarmHandler
+from utils.video_stream import VideoStream
+from utils_lane_detection.calibrate import Calibrate
+from utils_lane_detection.post_process import Postprocess
+from utils_lane_detection.pre_process import Preprocess
+from utils_lane_detection.display import Display
+from utils_lane_detection.alarm_handler import AlarmHandler
 from utils.cv_utils import cv_to_tf
 
 
