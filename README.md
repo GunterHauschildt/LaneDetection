@@ -2,7 +2,7 @@
 Prototype for a lane detection algorithm.
 
 ## Results <a name="results"></a>
-https://github.com/GunterHauschildt/LaneDeparture/releases/download/1.0/TuSimple-lane-detection.mp4
+https://github.com/user-attachments/assets/41e098be-34e8-4407-a402-02519ff6cf86
 
 ## Discussion <a name="discussion">
 An image segmentation neural network is used to predict lane markers.  
