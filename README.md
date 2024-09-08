@@ -6,8 +6,7 @@ https://github.com/user-attachments/assets/41e098be-34e8-4407-a402-02519ff6cf86
 
 ## Discussion <a name="discussion">
 An image segmentation neural network is used to predict lane markers.  
-Classical image processing and machine learning tecniques are used to cleanup those lane markers, ultimately giving a left-right sorted list that describes these lane markers.
-These lane markers are then used to detect lane departures.
+Classical image processing and machine learning tecniques are used to cleanup those lane markers, ultimately giving a left-right sorted list that describes these lane markers using simply y=mx+b.
 
 ### Data
 Kaggle's TuSimple dataset is used.  
