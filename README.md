@@ -1,8 +1,6 @@
 # LaneDeparture
 Prototype for a lane departure algorithm.
 
-CODE TO COME SOON
-
 ## Results <a name="results"></a>
 https://github.com/user-attachments/assets/7037d4b3-788c-469c-b359-f67b5c74bb12
 
@@ -26,22 +24,17 @@ The mask returned from the image segmentation NN must be converted to order lane
 To describe a lane marker's line, using y=mx+b will be used and thus the lane marker needs only m, b.  
 Generally, the NN gives noisy disconnected segments for each lane marker.  
 
-#### Morphology Open, Close, Smoothing  
+#### Morphology Open, Close, Smoothing, Thinning
 The mask as return from the image segmentation NN is first cleaned up by opening, closing, and then smoothing the resulting contours.  
-The result is 'curvy-but-close' 2D areas.
-
-#### Morphology Thinning    
-The 'curvy-but-close' 2D areas are converted to 'curvy-but-close' 1D contours.  
+The result is 'curvy-but-close' 2D areas. The 'curvy-but-close' 2D areas are converted to 'curvy-but-close' 1D contours.  
 If small, these 1D contours are discarded, otherwise they are assumed to be a straight line and their extremes used to define line segments.  
 
-#### K-Means Clustering & Sorting    
-The line segments are grouped according to K-Means clustering with silhouette score used to determine the number of lane markings found:  
-Thus we now know m, b for the lane markings found.  
-The lanes can be sorted by 'm'. Note that 'x' is vertical and 'y' is horizontal. This eliminates the possiblity of infinite slope -
-you can't drive perpendicular to the lane.
 
 #### Calibration  
-The period of N frames where all 4 lane markers are found is required.  
+Line segment descriptors, m, b from y=mx+b, when and only when the car is centered into its are pushed into KMeans.
+Kmeans output is then sorted from left to right (increasing m) so we can sort the lane segments in their approoriate lane,
+Note that 'x' is vertical and 'y' is horizontal. This eliminates the possiblity of infinite slope -
+you can't drive perpendicular to the lane.
 
 #### Kalman Filtering  
 Each lane marker is kalman filtered.  
