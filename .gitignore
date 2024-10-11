@@ -9,6 +9,9 @@ __pycache__/
 #data
 data/
 
+#extra code
+src/train_i_lost_my_data/
+
 # Distribution / packaging
 .Python
 build/
