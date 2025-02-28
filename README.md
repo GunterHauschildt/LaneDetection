@@ -23,16 +23,16 @@ The mask returned from the image segmentation network must be converted to order
 To describe a lane marker's line, the classic y=mx+b is used.  
 
 #### Morphology Open, Close, Smoothing, Thinning
-With TuSimple dataset show highway with lane dividers that are just small reflectors - not easily detected by image processing.
+The TuSimple dataset shows a highway with lane dividers that are just small reflectors - not easily detected by image processing.
 As such, even when prediction is excellent, the mask returned is noisy with gaps. This mask is first cleaned up by opening, closing, 
 and then smoothing the resulting contours. The result is 'curvy-but-close' 2D areas. The 'curvy-but-close' 2D areas are converted to
 'curvy-but-close' 1D contours. If small, these 1D contours are discarded, otherwise they are assumed to be a straight line and their extremes
 used to define line segments.  
 
 #### Calibration  
-Line segment descriptors (m & b), when and only when the car is centered on its lane, are pushed into KMeans.
-Kmeans output is then sorted from left to right (increasing m) so we can sort the lane segments in their approoriate lane,
-Note that 'x' is vertical and 'y' is horizontal. This eliminates the possiblity of infinite slope -
+Line segment descriptors (m & b from y= mx + b), when and only when the car is centered on its lane, are pushed into KMeans.
+Kmeans output is then sorted from left to right (increasing m) so we can sort the lane segments in their approriate lane,
+Note that, unconventionally, 'x' is vertical and 'y' is horizontal. This eliminates the possiblity of infinite slope -
 you can't drive perpendicular to the lane.
 
 #### Kalman Filtering  
